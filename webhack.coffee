@@ -432,18 +432,20 @@ class RainLayer
     @angle = d2r(30)
     @width = @view.width * 1.1
     @height = @view.height * 1.6
+    @translate = [@view.width * 0.4, -@view.height * 0.7]
   render: ->
     c = @view.context
     c.save()
-    c.translate(280, -400)
+    c.translate(@translate...)
     c.rotate(@angle)
-    c.fillStyle = Color.gray(rw(64, 16), 0.6)
-    #c.fillRect(0, 0, @width, @height)
-    _(16).times =>
-      w = 2
-      h = rr(128, 256) * 2
+    #c.fillStyle = Color.gray(128, 0.4) # rain area debugger
+    #c.fillRect(0, 0, @width, @height)  #  "    "    "
+    _(4).times =>
+      w = rr(1, 4)
+      h = rr(@height / 4, @height / 2)
       x = rr(0, @width)
       y = rr(0, @height - h)
+      c.fillStyle = Color.gray(rw(64, 16), 0.5)
       c.fillRect(x, y, w, h)
     c.restore()
 
