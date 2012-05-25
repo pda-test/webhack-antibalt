@@ -50,6 +50,7 @@ class PhysicalObject
 
 class Gun
   constructor: (@view, @objects, @crosshair) ->
+    @sound = new SoundEffect("audio/silencer.wav", 2)
   bind_to_view: ->
     @view.canvas.addEventListener("click", @click_listener)
     @view.canvas.addEventListener("mousemove", @mouse_move_listener)
@@ -57,6 +58,7 @@ class Gun
   aim: (x, y) ->
     @crosshair.aim(x, y)
   fire: (x, y) ->
+    @sound.play()
     new Explosion(@objects, x, y).bullet()
     bullet = new Bullet(x, y)
     shootables = @shootables_hit(bullet)
@@ -450,6 +452,15 @@ class RainLayer
       c.fillRect(x, y, w, h)
     c.restore()
 
+class SoundEffect
+  constructor: (url, @copies = 1) ->
+    @audios = []
+    @index = 0
+    @audios.push(new Audio(url)) for _ in [0...@copies] by 1
+  play: ->
+    @audios[@index].play()
+    @index = (@index + 1) % @copies
+    
 ##
 # Helper functions
 
