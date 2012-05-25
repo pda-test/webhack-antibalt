@@ -1,8 +1,9 @@
 ##
 # Dependencies
 
-URLS =
-  underscore: "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.1/underscore-min.js"
+DEPENDENCIES = [
+  "https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.3.1/underscore-min.js"
+]
 
 ##
 # Classes
@@ -493,7 +494,5 @@ new Gun(view, objects, crosshair).bind_to_view()
 ##
 # The game!
 
-require [URLS["underscore"]], ->
-  console.log("apparently loaded: %s", URLS["underscore"])
-  console.log("%o", _)
+require DEPENDENCIES, ->
   new Animator(ticker, interval_commands).start()
