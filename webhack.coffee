@@ -452,6 +452,22 @@ class RainLayer
       c.fillRect(x, y, w, h)
     c.restore()
 
+class BackgroundMusic extends IntervalCommand
+  delay: -> 100
+  execute: ->
+  start: ->
+    super
+    @audio = new Audio()
+    @audio.loop = true
+    @audio.autoplay = true
+    @audio.src = "audio/antibalt.mp3"
+  pause: ->
+    super
+    @audio.pause()
+  unpause: ->
+    super
+    @audio.play()
+
 class SoundEffect
   constructor: (url, @copies = 1) ->
     @audios = []
@@ -460,7 +476,7 @@ class SoundEffect
   play: ->
     @audios[@index].play()
     @index = (@index + 1) % @copies
-    
+
 ##
 # Helper functions
 
@@ -489,6 +505,7 @@ interval_commands = [
   new GarbageCollector(view, objects)
   new BackgroundGenerator(view, objects)
   new LightningFlasher(view, objects)
+  new BackgroundMusic(view, objects)
 ]
 
 ticker = (seconds_elapsed) ->
